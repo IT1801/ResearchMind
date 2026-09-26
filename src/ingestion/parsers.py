@@ -8,7 +8,7 @@ from langchain_core.documents import Document
 
 def record_to_document(
     record: Mapping[str, Any],
-    text_field: str = "abstract",
+    text_field: str = "text",
     dataset: str | None = None,
 ) -> Document | None:
     """Convert one metadata record into a searchable LangChain document."""
