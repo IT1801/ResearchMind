@@ -47,19 +47,17 @@ class HuggingFaceDatasetConnector:
 
 	def documents(self, limit: int | None = None) -> Iterator[Document]:
 		"""Yield abstract records as LangChain documents."""
+		from .parsers import record_to_document
+
 		for index, record in enumerate(self.records()):
-			text = str(record.get(self.config.text_field, "")).strip()
-			if not text:
+			document = record_to_document(
+				record,
+				text_field=self.config.text_field,
+				dataset=self.config.dataset_id,
+			)
+			if document is None:
 				continue
-			title = str(record.get("title", "")).strip()
-			page_content = f"{title}\n\n{text}" if title else text
-			metadata = {
-				key: value
-				for key, value in record.items()
-				if key not in {self.config.text_field, "title"}
-			}
-			metadata["dataset"] = self.config.dataset_id
-			yield Document(page_content=page_content, metadata=metadata)
+			yield document
 			if limit is not None and index + 1 >= limit:
 				return
 
