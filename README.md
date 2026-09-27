@@ -32,3 +32,10 @@ The default collection is `arxiv_abstracts_bge_base` in `.chroma`. Documents are
 embedded with normalized `BAAI/bge-base-en-v1.5` vectors (768 dimensions). Increase
 `--limit` only when you are ready to ingest more of the dataset. Set
 `BGE_EMBEDDING_MODEL` before creating a new collection if you choose another model.
+
+## Logging and errors
+
+Application logs are emitted through the `rag` logger. Configure them with
+`LOG_LEVEL=DEBUG` for detailed diagnostics or `LOG_JSON=true` for structured JSON
+records. Expected failures use typed exceptions such as `DataSourceError`,
+`EmbeddingError`, `VectorStoreError`, and `IngestionError`.

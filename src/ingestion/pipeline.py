@@ -2,7 +2,6 @@ from __future__ import annotations
 
 import argparse
 import json
-import sys
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, asdict
 from typing import Protocol
@@ -16,6 +15,10 @@ from .chunkers import (
 )
 from .parsers import huggingface_loader
 from ..vector_store.client import ChromaVectorStore
+from ..infra.exceptions import IngestionError, RAGError
+from ..logging.loggers import get_logger, log_exception
+
+logger = get_logger(__name__)
 
 
 class DocumentStore(Protocol):
@@ -48,9 +51,9 @@ class IngestionPipeline:
 		progress_every: int = 10,
 	) -> None:
 		if batch_size <= 0:
-			raise ValueError("batch_size must be greater than zero")
+			raise IngestionError("batch_size must be greater than zero")
 		if progress_every <= 0:
-			raise ValueError("progress_every must be greater than zero")
+			raise IngestionError("progress_every must be greater than zero")
 		self.document_loader = document_loader
 		self.store = store or ChromaVectorStore()
 		self.chunk_size = chunk_size
@@ -73,26 +76,38 @@ class IngestionPipeline:
 	def run(self, limit: int | None = None) -> IngestionStats:
 		stats = IngestionStats()
 		batch: list[Document] = []
-		for document in self.parse_documents(limit):
-			stats.source_documents += 1
-			for chunk in self.chunk_documents(iter([document])):
-				batch.append(chunk)
-				if len(batch) >= self.batch_size:
-					stats.chunks += self.store.add_documents(batch)
-					stats.batches += 1
-					batch = []
-					if stats.batches % self.progress_every == 0:
-						print(
-							f"ingested {stats.source_documents} documents, "
-							f"{stats.chunks} chunks",
-							file=sys.stderr,
-							flush=True,
-						)
+		try:
+			for document in self.parse_documents(limit):
+				stats.source_documents += 1
+				for chunk in self.chunk_documents(iter([document])):
+					batch.append(chunk)
+					if len(batch) >= self.batch_size:
+						stats.chunks += self.store.add_documents(batch)
+						stats.batches += 1
+						batch = []
+						if stats.batches % self.progress_every == 0:
+							logger.info(
+								"Ingestion progress",
+								extra={
+									"source_documents": stats.source_documents,
+									"chunks": stats.chunks,
+									"batches": stats.batches,
+								},
+							)
 
-		if batch:
-			stats.chunks += self.store.add_documents(batch)
-			stats.batches += 1
-		return stats
+			if batch:
+				stats.chunks += self.store.add_documents(batch)
+				stats.batches += 1
+			return stats
+		except RAGError:
+			raise
+		except Exception as error:
+			log_exception(logger, "Ingestion pipeline failed", error, {
+				"source_documents": stats.source_documents,
+				"chunks": stats.chunks,
+				"batches": stats.batches,
+			})
+			raise IngestionError("Ingestion pipeline failed") from error
 
 
 def _build_parser() -> argparse.ArgumentParser:
@@ -113,13 +128,17 @@ def _build_parser() -> argparse.ArgumentParser:
 
 def main() -> None:
 	args = _build_parser().parse_args()
-	store = ChromaVectorStore(args.persist_directory, args.collection)
-	stats = IngestionPipeline(
-		store=store,
-		batch_size=args.batch_size,
-		progress_every=args.progress_every,
-	).run(args.limit)
-	print(json.dumps(asdict(stats), indent=2))
+	try:
+		store = ChromaVectorStore(args.persist_directory, args.collection)
+		stats = IngestionPipeline(
+			store=store,
+			batch_size=args.batch_size,
+			progress_every=args.progress_every,
+		).run(args.limit)
+		print(json.dumps(asdict(stats), indent=2))
+	except RAGError as error:
+		log_exception(logger, "Ingestion command failed", error)
+		raise SystemExit(str(error)) from error
 
 
 if __name__ == "__main__":

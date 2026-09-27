@@ -11,7 +11,11 @@ from urllib.request import Request, urlopen
 from dotenv import load_dotenv
 from langchain_core.documents import Document
 
+from ..infra.exceptions import DataSourceError
+from ..logging.loggers import get_logger, log_exception
+
 load_dotenv()
+logger = get_logger(__name__)
 
 
 @dataclass(frozen=True)
@@ -57,8 +61,18 @@ class HuggingFaceDatasetConnector:
 				f"{self.config.rows_api_url}?{query}",
 				headers={"Authorization": f"Bearer {os.getenv('HF_TOKEN', '')}"},
 			)
-			with urlopen(request, timeout=30) as response:
-				payload = json.load(response)
+			try:
+				with urlopen(request, timeout=30) as response:
+					payload = json.load(response)
+			except Exception as error:
+				log_exception(logger, "Unable to fetch Hugging Face dataset page", error, {
+					"dataset": self.config.dataset_id,
+					"split": self.config.split,
+					"offset": offset,
+				})
+				raise DataSourceError(
+					f"Unable to fetch dataset page at offset {offset}"
+				) from error
 			rows = payload.get("rows", [])
 			if not rows:
 				return

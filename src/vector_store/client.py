@@ -10,6 +10,10 @@ import chromadb
 from langchain_core.documents import Document
 
 from ..embeddings.vector_embeddings import bge_embedding_function
+from ..infra.exceptions import VectorStoreError
+from ..logging.loggers import get_logger, log_exception
+
+logger = get_logger(__name__)
 
 
 class ChromaVectorStore:
@@ -26,11 +30,20 @@ class ChromaVectorStore:
             self.collection = collection
             return
 
-        client = chromadb.PersistentClient(path=str(path))
-        self.collection = client.get_or_create_collection(
-            collection_name,
-            embedding_function=embedding_function or bge_embedding_function(),
-        )
+        try:
+            client = chromadb.PersistentClient(path=str(path))
+            self.collection = client.get_or_create_collection(
+                collection_name,
+                embedding_function=embedding_function or bge_embedding_function(),
+            )
+        except Exception as error:
+            log_exception(logger, "Unable to initialize vector store", error, {
+                "path": str(path),
+                "collection": collection_name,
+            })
+            raise VectorStoreError(
+                f"Unable to initialize vector store collection: {collection_name}"
+            ) from error
 
     def add_documents(self, documents: Iterable[Document]) -> int:
         documents = list(documents)
@@ -40,11 +53,18 @@ class ChromaVectorStore:
         ids = [self._document_id(document) for document in documents]
         texts = [document.page_content for document in documents]
         metadatas = [self._metadata(document.metadata) for document in documents]
-        self.collection.upsert(
-            ids=ids,
-            documents=texts,
-            metadatas=metadatas,
-        )
+        try:
+            self.collection.upsert(
+                ids=ids,
+                documents=texts,
+                metadatas=metadatas,
+            )
+        except Exception as error:
+            log_exception(logger, "Unable to persist document batch", error, {
+                "collection": self.collection.name,
+                "batch_size": len(documents),
+            })
+            raise VectorStoreError("Unable to persist document batch") from error
         return len(documents)
 
     @staticmethod
