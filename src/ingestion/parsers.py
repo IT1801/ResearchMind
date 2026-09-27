@@ -42,6 +42,11 @@ def huggingface_loader(
         dataset_id=dataset_id or defaults.dataset_id,
         split=split or defaults.split,
         text_field=text_field or defaults.text_field,
+        rows_api_url=defaults.rows_api_url,
+        page_size=defaults.page_size,
+        request_timeout=defaults.request_timeout,
+        max_retries=defaults.max_retries,
+        retry_backoff_seconds=defaults.retry_backoff_seconds,
     )
     connector = HuggingFaceDatasetConnector(config)
     return connector.documents(limit=limit)

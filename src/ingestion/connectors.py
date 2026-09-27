@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import time
 from dataclasses import dataclass
 from typing import Any, Iterator
 from urllib.parse import urlencode
@@ -26,6 +27,10 @@ class HuggingFaceDatasetConfig:
 	split: str = "train"
 	text_field: str = "text"
 	rows_api_url: str = "https://datasets-server.huggingface.co/rows"
+	page_size: int = 100
+	request_timeout: float = 30.0
+	max_retries: int = 5
+	retry_backoff_seconds: float = 2.0
 
 	@classmethod
 	def from_environment(cls) -> "HuggingFaceDatasetConfig":
@@ -34,6 +39,17 @@ class HuggingFaceDatasetConfig:
 			split=os.getenv("HF_DATASET_SPLIT", cls.split),
 			text_field=os.getenv("HF_DATASET_TEXT_FIELD", cls.text_field),
 			rows_api_url=os.getenv("HF_ROWS_API_URL", cls.rows_api_url),
+			page_size=int(os.getenv("HF_PAGE_SIZE", str(cls.page_size))),
+			request_timeout=float(
+				os.getenv("HF_REQUEST_TIMEOUT", str(cls.request_timeout))
+			),
+			max_retries=int(os.getenv("HF_MAX_RETRIES", str(cls.max_retries))),
+			retry_backoff_seconds=float(
+				os.getenv(
+					"HF_RETRY_BACKOFF_SECONDS",
+					str(cls.retry_backoff_seconds),
+				)
+			),
 		)
 
 
@@ -46,7 +62,6 @@ class HuggingFaceDatasetConnector:
 	def records(self) -> Iterator[dict[str, Any]]:
 		"""Yield dataset records through the Hugging Face rows API."""
 		offset = 0
-		page_size = 100
 		while True:
 			query = urlencode(
 				{
@@ -54,32 +69,47 @@ class HuggingFaceDatasetConnector:
 					"config": "default",
 					"split": self.config.split,
 					"offset": offset,
-					"length": page_size,
+					"length": self.config.page_size,
 				}
 			)
 			request = Request(
 				f"{self.config.rows_api_url}?{query}",
 				headers={"Authorization": f"Bearer {os.getenv('HF_TOKEN', '')}"},
 			)
-			try:
-				with urlopen(request, timeout=30) as response:
-					payload = json.load(response)
-			except Exception as error:
-				log_exception(logger, "Unable to fetch Hugging Face dataset page", error, {
-					"dataset": self.config.dataset_id,
-					"split": self.config.split,
-					"offset": offset,
-				})
-				raise DataSourceError(
-					f"Unable to fetch dataset page at offset {offset}"
-				) from error
+			for attempt in range(self.config.max_retries + 1):
+				try:
+					with urlopen(request, timeout=self.config.request_timeout) as response:
+						payload = json.load(response)
+					break
+				except Exception as error:
+					if attempt >= self.config.max_retries:
+						log_exception(
+							logger,
+							"Unable to fetch Hugging Face dataset page",
+							error,
+							{
+								"dataset": self.config.dataset_id,
+								"split": self.config.split,
+								"offset": offset,
+								"attempts": attempt + 1,
+							},
+						)
+						raise DataSourceError(
+							f"Unable to fetch dataset page at offset {offset}"
+						) from error
+					delay = self.config.retry_backoff_seconds * (2**attempt)
+					logger.warning(
+						"Retrying Hugging Face dataset page",
+						extra={"offset": offset, "attempt": attempt + 1, "delay": delay},
+					)
+					time.sleep(delay)
 			rows = payload.get("rows", [])
 			if not rows:
 				return
 			for item in rows:
 				yield dict(item["row"])
 			offset += len(rows)
-			if len(rows) < page_size:
+			if len(rows) < self.config.page_size:
 				return
 
 	def documents(self, limit: int | None = None) -> Iterator[Document]:

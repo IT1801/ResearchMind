@@ -28,6 +28,20 @@ Run a bounded ingestion into persistent Chroma storage:
 uv run python -m src.ingestion.pipeline --limit 10 --batch-size 500
 ```
 
+To ingest 500,000 source documents, run the same streaming pipeline with an
+explicit limit. It keeps only one embedding batch in memory and retries
+transient Hugging Face rows API failures with exponential backoff:
+
+```bash
+uv run python -m src.ingestion.pipeline --limit 500000 --batch-size 500 --progress-every 20
+```
+
+The run is safe to restart against the same collection because chunk IDs are
+deterministic and Chroma uses upserts. Set `HF_MAX_RETRIES`,
+`HF_RETRY_BACKOFF_SECONDS`, `HF_REQUEST_TIMEOUT`, or `HF_PAGE_SIZE` in `.env`
+when tuning a long-running job. Expect roughly 5,000 source-page requests;
+embedding and disk capacity are the main runtime constraints.
+
 The default collection is `arxiv_abstracts_bge_base` in `.chroma`. Documents are
 embedded with normalized `BAAI/bge-base-en-v1.5` vectors (768 dimensions). Increase
 `--limit` only when you are ready to ingest more of the dataset. Set
