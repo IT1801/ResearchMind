@@ -183,7 +183,7 @@ def _build_parser() -> argparse.ArgumentParser:
 	parser.add_argument("--top-k", type=int, default=10)
 	parser.add_argument("--candidate-k", type=int, default=50)
 	parser.add_argument("--persist-directory", default=".chroma")
-	parser.add_argument("--collection", default="arxiv_abstracts_bge_base")
+	parser.add_argument("--collection", default="arxiv_abstracts_parent_child")
 	return parser
 
 

@@ -47,6 +47,8 @@ def huggingface_loader(
         request_timeout=defaults.request_timeout,
         max_retries=defaults.max_retries,
         retry_backoff_seconds=defaults.retry_backoff_seconds,
+        start_offset=defaults.start_offset,
+        ca_bundle=defaults.ca_bundle,
     )
     connector = HuggingFaceDatasetConnector(config)
     return connector.documents(limit=limit)

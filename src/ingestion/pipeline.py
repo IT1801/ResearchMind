@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from collections.abc import Callable, Iterator
 from dataclasses import dataclass, asdict
 from typing import Protocol
@@ -131,14 +132,23 @@ def _build_parser() -> argparse.ArgumentParser:
 	parser.add_argument("--parent-chunk-size", type=int, default=DEFAULT_CHUNK_SIZE)
 	parser.add_argument("--child-chunk-size", type=int, default=DEFAULT_CHILD_CHUNK_SIZE)
 	parser.add_argument("--progress-every", type=int, default=10, metavar="N")
+	parser.add_argument(
+		"--start-offset",
+		type=int,
+		default=0,
+		help="Resume from this Hugging Face source row offset.",
+	)
 	parser.add_argument("--persist-directory", default=".chroma")
-	parser.add_argument("--collection", default="arxiv_abstracts_bge_base")
+	parser.add_argument("--collection", default="arxiv_abstracts_parent_child")
 	return parser
 
 
 def main() -> None:
 	args = _build_parser().parse_args()
 	try:
+		if args.start_offset < 0:
+			raise IngestionError("start_offset must not be negative")
+		os.environ["HF_START_OFFSET"] = str(args.start_offset)
 		store = ChromaVectorStore(args.persist_directory, args.collection)
 		stats = IngestionPipeline(
 			store=store,

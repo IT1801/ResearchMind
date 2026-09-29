@@ -1,8 +1,10 @@
 from __future__ import annotations
 
 import argparse
+import certifi
 import json
 import os
+import ssl
 import time
 from dataclasses import dataclass
 from typing import Any, Iterator
@@ -31,6 +33,8 @@ class HuggingFaceDatasetConfig:
 	request_timeout: float = 30.0
 	max_retries: int = 5
 	retry_backoff_seconds: float = 2.0
+	start_offset: int = 0
+	ca_bundle: str = certifi.where()
 
 	@classmethod
 	def from_environment(cls) -> "HuggingFaceDatasetConfig":
@@ -50,6 +54,8 @@ class HuggingFaceDatasetConfig:
 					str(cls.retry_backoff_seconds),
 				)
 			),
+			start_offset=int(os.getenv("HF_START_OFFSET", str(cls.start_offset))),
+			ca_bundle=os.getenv("HF_CA_BUNDLE", cls.ca_bundle),
 		)
 
 
@@ -61,7 +67,8 @@ class HuggingFaceDatasetConnector:
 
 	def records(self) -> Iterator[dict[str, Any]]:
 		"""Yield dataset records through the Hugging Face rows API."""
-		offset = 0
+		offset = self.config.start_offset
+		ssl_context = ssl.create_default_context(cafile=self.config.ca_bundle)
 		while True:
 			query = urlencode(
 				{
@@ -78,7 +85,11 @@ class HuggingFaceDatasetConnector:
 			)
 			for attempt in range(self.config.max_retries + 1):
 				try:
-					with urlopen(request, timeout=self.config.request_timeout) as response:
+					with urlopen(
+						request,
+						timeout=self.config.request_timeout,
+						context=ssl_context,
+					) as response:
 						payload = json.load(response)
 					break
 				except Exception as error:

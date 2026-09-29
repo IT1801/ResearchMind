@@ -43,7 +43,12 @@ deterministic and Chroma uses upserts. Set `HF_MAX_RETRIES`,
 when tuning a long-running job. Expect roughly 5,000 source-page requests;
 embedding and disk capacity are the main runtime constraints.
 
-The default collection is `arxiv_abstracts_bge_base` in `.chroma`. Documents are
+If a run stops after a source offset, resume with `--start-offset` and reduce
+`--limit` by the number of documents already processed. Set `HF_CA_BUNDLE` to
+your organization’s PEM CA bundle when HTTPS is intercepted by a corporate
+proxy; TLS verification remains enabled.
+
+The default collection is `arxiv_abstracts_parent_child` in `.chroma`. Documents are
 embedded with normalized `BAAI/bge-base-en-v1.5` vectors (768 dimensions). Increase
 `--limit` only when you are ready to ingest more of the dataset. Set
 `BGE_EMBEDDING_MODEL` before creating a new collection if you choose another model.

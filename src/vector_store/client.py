@@ -22,7 +22,7 @@ class ChromaVectorStore:
     def __init__(
         self,
         path: str | Path = ".chroma",
-        collection_name: str = "arxiv_abstracts_bge_base",
+        collection_name: str = "arxiv_abstracts_parent_child",
         collection: Any | None = None,
         embedding_function: Any | None = None,
     ) -> None:
