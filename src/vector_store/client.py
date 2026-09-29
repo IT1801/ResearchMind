@@ -15,6 +15,14 @@ from ..logging.loggers import get_logger, log_exception
 
 logger = get_logger(__name__)
 
+HNSW_M = 16
+HNSW_EF = 100
+HNSW_METADATA = {
+    "hnsw:M": HNSW_M,
+    "hnsw:construction_ef": HNSW_EF,
+    "hnsw:search_ef": HNSW_EF,
+}
+
 
 class ChromaVectorStore:
     """Persistent Chroma storage for LangChain documents."""
@@ -34,6 +42,7 @@ class ChromaVectorStore:
             client = chromadb.PersistentClient(path=str(path))
             self.collection = client.get_or_create_collection(
                 collection_name,
+                metadata=HNSW_METADATA,
                 embedding_function=embedding_function or bge_embedding_function(),
             )
         except Exception as error:

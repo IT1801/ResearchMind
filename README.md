@@ -52,6 +52,9 @@ The default collection is `arxiv_abstracts_parent_child` in `.chroma`. Documents
 embedded with normalized `BAAI/bge-base-en-v1.5` vectors (768 dimensions). Increase
 `--limit` only when you are ready to ingest more of the dataset. Set
 `BGE_EMBEDDING_MODEL` before creating a new collection if you choose another model.
+New collections use Chroma HNSW `M=16` and `ef=100` for a speed and recall
+balance. HNSW settings are fixed when a collection is created; rebuild into a
+new collection to apply these settings to an existing index.
 
 ## Logging and errors
 
