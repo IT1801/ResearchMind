@@ -13,6 +13,7 @@ from ..logging.loggers import get_logger, log_exception
 from ..vector_store.client import ChromaVectorStore
 from .context_compressor import LLMContextCompressor
 from .reranker import CrossEncoderReranker
+from .semantic_cache import CachedResult, SemanticQueryCache
 
 logger = get_logger(__name__)
 
@@ -43,6 +44,7 @@ class HybridRetriever:
 		get_batch_size: int = 5000,
 		reranker: CrossEncoderReranker | None = None,
 		compressor: LLMContextCompressor | None = None,
+		cache: SemanticQueryCache | None = None,
 		tokenizer: Callable[[str], list[str]] = _tokenize,
 	) -> None:
 		if candidate_k <= 0:
@@ -66,6 +68,7 @@ class HybridRetriever:
 		self._bm25: BM25Okapi | None = None
 		self.reranker = reranker or CrossEncoderReranker()
 		self.compressor = compressor or LLMContextCompressor()
+		self.cache = cache
 
 	def _ensure_bm25(self) -> None:
 		if self._bm25 is not None:
@@ -101,6 +104,28 @@ class HybridRetriever:
 			return []
 		if top_k <= 0:
 			raise ValueError("top_k must be greater than zero")
+
+		if self.cache is None:
+			try:
+				self.cache = SemanticQueryCache()
+			except RAGError as error:
+				logger.warning("Semantic cache unavailable; continuing without cache", exc_info=error)
+		if self.cache is not None:
+			try:
+				cached = self.cache.get(query)
+			except RAGError as error:
+				logger.warning("Semantic cache read failed", exc_info=error)
+				cached = None
+			if cached:
+				return [
+					RetrievalResult(
+						document=item.document,
+						score=item.score,
+						vector_rank=item.vector_rank,
+						bm25_rank=item.bm25_rank,
+					)
+					for item in cached[:top_k]
+				]
 
 		self._ensure_bm25()
 		assert self._bm25 is not None
@@ -210,7 +235,7 @@ class HybridRetriever:
 		compressed_by_index = {
 			item.source_index: item.document for item in compressed
 		}
-		return [
+		results = [
 			RetrievalResult(
 				document=compressed_by_index[index],
 				score=result.score,
@@ -220,6 +245,23 @@ class HybridRetriever:
 			for index, result in enumerate(results)
 			if index in compressed_by_index
 		]
+		if self.cache is not None:
+			try:
+				self.cache.put(
+					query,
+					[
+						CachedResult(
+							document=result.document,
+							score=result.score,
+							vector_rank=result.vector_rank,
+							bm25_rank=result.bm25_rank,
+						)
+						for result in results
+					],
+				)
+			except RAGError as error:
+				logger.warning("Semantic cache write failed", exc_info=error)
+		return results
 
 def search(query: str, top_k: int = 10) -> list[RetrievalResult]:
 	"""Convenience wrapper using the default persistent collection."""

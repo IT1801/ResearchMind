@@ -24,7 +24,9 @@ tokenizer. Child chunks carry a stable `parent_id` and the parent text. Hybrid
 retrieval searches child chunks, collapses matches to linked parents, and uses a
 cross-encoder to rerank the parent contexts. A single Gemini compression call
 then removes parent chunks that are not required and extracts only the evidence
-needed for the final LLM prompt.
+needed for the final LLM prompt. Final compressed results are also stored in a
+separate semantic query cache; similar future questions within the configured
+distance threshold can skip retrieval, reranking, and compression.
 
 Run a bounded ingestion into persistent Chroma storage:
 
