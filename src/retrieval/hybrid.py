@@ -90,7 +90,7 @@ class HybridRetriever:
 			raise VectorStoreError("Unable to build BM25 index") from error
 
 	def retrieve(self, query: str, top_k: int = 10) -> list[RetrievalResult]:
-		"""Return the top documents ranked by vector and lexical relevance."""
+		"""Rank child chunks, then return their unique parent contexts."""
 		if not query.strip():
 			return []
 		if top_k <= 0:
@@ -143,12 +143,34 @@ class HybridRetriever:
 			entry["score"] += self.bm25_weight / (60 + rank)
 			entry["bm25_rank"] = rank
 
-		return [
-			RetrievalResult(**entry)
-			for entry in sorted(
-				fused.values(), key=lambda entry: entry["score"], reverse=True
-			)[:top_k]
-		]
+		parents: dict[str, dict[str, Any]] = {}
+		for document_id, entry in fused.items():
+			child = entry["document"]
+			parent_id = str(child.metadata.get("parent_id", document_id))
+			parent_entry = parents.get(parent_id)
+			if parent_entry is None or entry["score"] > parent_entry["score"]:
+				parents[parent_id] = entry
+
+		results: list[RetrievalResult] = []
+		for entry in sorted(
+				parents.values(), key=lambda item: item["score"], reverse=True
+			)[:top_k]:
+			child = entry["document"]
+			metadata = dict(child.metadata)
+			parent_content = metadata.pop("parent_content", None)
+			if parent_content is not None:
+				metadata.pop("chunk_level", None)
+				metadata["chunk_level"] = "parent"
+				metadata["start_index"] = metadata.get(
+					"parent_start_index", metadata.get("start_index", 0)
+				)
+				metadata.pop("parent_start_index", None)
+				entry = {**entry, "document": Document(
+					page_content=parent_content,
+					metadata=metadata,
+				)}
+			results.append(RetrievalResult(**entry))
+		return results
 
 def search(query: str, top_k: int = 10) -> list[RetrievalResult]:
 	"""Convenience wrapper using the default persistent collection."""

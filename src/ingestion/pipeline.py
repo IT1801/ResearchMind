@@ -11,7 +11,9 @@ from langchain_core.documents import Document
 from .chunkers import (
 	DEFAULT_CHUNK_OVERLAP,
 	DEFAULT_CHUNK_SIZE,
-	recursive_chunk_documents,
+	DEFAULT_CHILD_CHUNK_OVERLAP,
+	DEFAULT_CHILD_CHUNK_SIZE,
+	parent_child_chunk_documents,
 )
 from .parsers import huggingface_loader
 from ..vector_store.client import ChromaVectorStore
@@ -47,6 +49,8 @@ class IngestionPipeline:
 		store: DocumentStore | None = None,
 		chunk_size: int = DEFAULT_CHUNK_SIZE,
 		chunk_overlap: int = DEFAULT_CHUNK_OVERLAP,
+		child_chunk_size: int = DEFAULT_CHILD_CHUNK_SIZE,
+		child_chunk_overlap: int = DEFAULT_CHILD_CHUNK_OVERLAP,
 		batch_size: int = 100,
 		progress_every: int = 10,
 	) -> None:
@@ -58,6 +62,8 @@ class IngestionPipeline:
 		self.store = store or ChromaVectorStore()
 		self.chunk_size = chunk_size
 		self.chunk_overlap = chunk_overlap
+		self.child_chunk_size = child_chunk_size
+		self.child_chunk_overlap = child_chunk_overlap
 		self.batch_size = batch_size
 		self.progress_every = progress_every
 
@@ -67,10 +73,12 @@ class IngestionPipeline:
 
 	def chunk_documents(self, documents: Iterator[Document]) -> Iterator[Document]:
 		"""Apply the configured recursive token chunking strategy."""
-		return recursive_chunk_documents(
+		return parent_child_chunk_documents(
 			documents,
-			chunk_size=self.chunk_size,
-			chunk_overlap=self.chunk_overlap,
+			parent_chunk_size=self.chunk_size,
+			parent_chunk_overlap=self.chunk_overlap,
+			child_chunk_size=self.child_chunk_size,
+			child_chunk_overlap=self.child_chunk_overlap,
 		)
 
 	def run(self, limit: int | None = None) -> IngestionStats:
@@ -120,6 +128,8 @@ def _build_parser() -> argparse.ArgumentParser:
 		help="Stream at most N source documents (default: 10).",
 	)
 	parser.add_argument("--batch-size", type=int, default=500, metavar="N")
+	parser.add_argument("--parent-chunk-size", type=int, default=DEFAULT_CHUNK_SIZE)
+	parser.add_argument("--child-chunk-size", type=int, default=DEFAULT_CHILD_CHUNK_SIZE)
 	parser.add_argument("--progress-every", type=int, default=10, metavar="N")
 	parser.add_argument("--persist-directory", default=".chroma")
 	parser.add_argument("--collection", default="arxiv_abstracts_bge_base")
@@ -133,6 +143,8 @@ def main() -> None:
 		stats = IngestionPipeline(
 			store=store,
 			batch_size=args.batch_size,
+			chunk_size=args.parent_chunk_size,
+			child_chunk_size=args.child_chunk_size,
 			progress_every=args.progress_every,
 		).run(args.limit)
 		print(json.dumps(asdict(stats), indent=2))

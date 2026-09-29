@@ -18,9 +18,10 @@ Optional settings are `HF_DATASET_ID`, `HF_DATASET_SPLIT`, `HF_DATASET_TEXT_FIEL
 and `HF_ROWS_API_URL`. `HF_TOKEN` is loaded from `.env` and sent with each request
 to improve access reliability and rate limits.
 
-Documents are recursively chunked with a 600-token chunk size and 60-token overlap
-using the `cl100k_base` tokenizer. Paper metadata is copied to every chunk, along
-with its `start_index`.
+Documents are split into 600-token parent chunks with a 60-token overlap, then
+into 200-token child chunks with a 20-token overlap using the `cl100k_base`
+tokenizer. Child chunks carry a stable `parent_id` and the parent text. Hybrid
+retrieval searches child chunks but returns the linked parent context to the LLM.
 
 Run a bounded ingestion into persistent Chroma storage:
 
