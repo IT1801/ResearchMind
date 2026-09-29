@@ -11,6 +11,8 @@ from rank_bm25 import BM25Okapi
 from ..infra.exceptions import RAGError, VectorStoreError
 from ..logging.loggers import get_logger, log_exception
 from ..vector_store.client import ChromaVectorStore
+from .context_compressor import LLMContextCompressor
+from .reranker import CrossEncoderReranker
 
 logger = get_logger(__name__)
 
@@ -39,6 +41,8 @@ class HybridRetriever:
 		vector_weight: float = 0.5,
 		bm25_weight: float = 0.5,
 		get_batch_size: int = 5000,
+		reranker: CrossEncoderReranker | None = None,
+		compressor: LLMContextCompressor | None = None,
 		tokenizer: Callable[[str], list[str]] = _tokenize,
 	) -> None:
 		if candidate_k <= 0:
@@ -60,6 +64,8 @@ class HybridRetriever:
 		self._document_by_id: dict[str, Document] = {}
 		self._document_ids: list[str] = []
 		self._bm25: BM25Okapi | None = None
+		self.reranker = reranker or CrossEncoderReranker()
+		self.compressor = compressor or LLMContextCompressor()
 
 	def _ensure_bm25(self) -> None:
 		if self._bm25 is not None:
@@ -151,10 +157,10 @@ class HybridRetriever:
 			if parent_entry is None or entry["score"] > parent_entry["score"]:
 				parents[parent_id] = entry
 
-		results: list[RetrievalResult] = []
+		parent_candidates: list[dict[str, Any]] = []
 		for entry in sorted(
-				parents.values(), key=lambda item: item["score"], reverse=True
-			)[:top_k]:
+			parents.values(), key=lambda item: item["score"], reverse=True
+		)[: max(top_k, self.candidate_k)]:
 			child = entry["document"]
 			metadata = dict(child.metadata)
 			parent_content = metadata.pop("parent_content", None)
@@ -169,8 +175,51 @@ class HybridRetriever:
 					page_content=parent_content,
 					metadata=metadata,
 				)}
-			results.append(RetrievalResult(**entry))
-		return results
+			parent_candidates.append(entry)
+
+		reranked = self.reranker.rerank(
+			query,
+			[entry["document"] for entry in parent_candidates],
+			top_k=top_k,
+		)
+		results: list[RetrievalResult] = []
+		for reranked_result in reranked:
+			entry = next(
+				entry
+				for entry in parent_candidates
+				if entry["document"] is reranked_result.document
+			)
+			results.append(
+				RetrievalResult(
+					document=reranked_result.document,
+					score=reranked_result.score,
+					vector_rank=entry["vector_rank"],
+					bm25_rank=entry["bm25_rank"],
+				)
+			)
+		try:
+			compressed = self.compressor.compress(
+				query, [result.document for result in results]
+			)
+		except RAGError as error:
+			logger.warning("Context compression failed; returning parent contexts", exc_info=error)
+			return results
+		if not compressed:
+			return results
+
+		compressed_by_index = {
+			item.source_index: item.document for item in compressed
+		}
+		return [
+			RetrievalResult(
+				document=compressed_by_index[index],
+				score=result.score,
+				vector_rank=result.vector_rank,
+				bm25_rank=result.bm25_rank,
+			)
+			for index, result in enumerate(results)
+			if index in compressed_by_index
+		]
 
 def search(query: str, top_k: int = 10) -> list[RetrievalResult]:
 	"""Convenience wrapper using the default persistent collection."""

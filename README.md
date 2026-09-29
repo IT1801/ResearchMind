@@ -21,7 +21,10 @@ to improve access reliability and rate limits.
 Documents are split into 600-token parent chunks with a 60-token overlap, then
 into 200-token child chunks with a 20-token overlap using the `cl100k_base`
 tokenizer. Child chunks carry a stable `parent_id` and the parent text. Hybrid
-retrieval searches child chunks but returns the linked parent context to the LLM.
+retrieval searches child chunks, collapses matches to linked parents, and uses a
+cross-encoder to rerank the parent contexts. A single Gemini compression call
+then removes parent chunks that are not required and extracts only the evidence
+needed for the final LLM prompt.
 
 Run a bounded ingestion into persistent Chroma storage:
 
