@@ -1,0 +1,1040 @@
+{
+  "queries": 30,
+  "candidate_k": 50,
+  "vector_only": {
+    "mean_recall_at_10": 0.9,
+    "mean_latency_seconds": 0.15605947493301453,
+    "p95_latency_seconds": 0.7175556472497161
+  },
+  "hybrid_reranked": {
+    "mean_recall_at_10": 1.0,
+    "mean_latency_seconds": 2.778345949999736,
+    "p95_latency_seconds": 0.985364346049573
+  },
+  "results": [
+    {
+      "query": "What process is analyzed for massive photon pairs at hadron colliders?",
+      "relevant_document_ids": [
+        "0704.0001"
+      ],
+      "vector_document_ids": [
+        "0704.0001",
+        "0705.2740",
+        "0710.1722",
+        "0707.0797",
+        "0704.0760",
+        "0710.3843",
+        "0710.0575",
+        "0709.1026",
+        "0710.2818",
+        "0705.0036"
+      ],
+      "hybrid_document_ids": [
+        "0704.0001",
+        "0710.1722",
+        "0707.0797",
+        "0709.2378",
+        "0707.0423",
+        "0705.2740",
+        "0706.0441",
+        "0705.2372",
+        "0710.4287",
+        "0801.2043"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 1.4116102080006385,
+      "hybrid_latency_seconds": 62.20321137499923
+    },
+    {
+      "query": "What does the colored (k,l)-pebble game characterize?",
+      "relevant_document_ids": [
+        "0704.0002"
+      ],
+      "vector_document_ids": [
+        "0704.0002",
+        "0708.0880",
+        "0707.0465",
+        "0710.2419",
+        "0711.1055",
+        "0707.4256",
+        "0801.0579",
+        "0710.0173",
+        "0705.3227",
+        "0801.0833"
+      ],
+      "hybrid_document_ids": [
+        "0704.0002",
+        "0707.0465",
+        "0708.3542",
+        "0709.1507",
+        "0705.3227",
+        "0707.4580",
+        "0707.4256",
+        "0709.1263",
+        "0712.2908",
+        "0710.0173"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 1.198871541000699,
+      "hybrid_latency_seconds": 1.0151364589983132
+    },
+    {
+      "query": "What model is used to describe the evolution of the Earth-Moon system?",
+      "relevant_document_ids": [
+        "0704.0003"
+      ],
+      "vector_document_ids": [
+        "0704.0003",
+        "0710.1450",
+        "0705.0873",
+        "0801.4031",
+        "0712.1907",
+        "0710.0166",
+        "0705.1046",
+        "0710.1450",
+        "0710.2023",
+        "0711.2015"
+      ],
+      "hybrid_document_ids": [
+        "0704.0003",
+        "0709.0005",
+        "0710.1450",
+        "0802.2144",
+        "0801.4031",
+        "0710.0166",
+        "0801.1349",
+        "0704.2867",
+        "0801.2982",
+        "0711.2015"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06459258299946669,
+      "hybrid_latency_seconds": 0.7477335410003434
+    },
+    {
+      "query": "What combinatorial objects are counted by a determinant of Stirling cycle numbers?",
+      "relevant_document_ids": [
+        "0704.0004"
+      ],
+      "vector_document_ids": [
+        "0704.0004",
+        "0712.1755",
+        "0711.1400",
+        "0704.3381",
+        "0708.0809",
+        "0711.4841",
+        "0802.2175",
+        "0706.2918",
+        "0802.1293",
+        "0705.2734"
+      ],
+      "hybrid_document_ids": [
+        "0704.0004",
+        "0704.3116",
+        "0708.3223",
+        "0711.0481",
+        "0712.1755",
+        "0709.0430",
+        "0802.1162",
+        "0708.4039",
+        "0709.0498",
+        "0710.2860"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.08594904200072051,
+      "hybrid_latency_seconds": 0.7415189579987782
+    },
+    {
+      "query": "How can the Lambda_alpha norm be computed?",
+      "relevant_document_ids": [
+        "0704.0005"
+      ],
+      "vector_document_ids": [
+        "0704.0005",
+        "0801.3559",
+        "0712.0863",
+        "0707.1939",
+        "0711.0690",
+        "0711.4665",
+        "0801.0554",
+        "0711.3236",
+        "0802.0035",
+        "0708.2197"
+      ],
+      "hybrid_document_ids": [
+        "0704.0005",
+        "0708.2197",
+        "0706.2483",
+        "0801.2811",
+        "0708.1433",
+        "0710.4392",
+        "0711.4665",
+        "0711.3236",
+        "0707.4240",
+        "0709.0647"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06624870900122914,
+      "hybrid_latency_seconds": 0.7570501249974768
+    },
+    {
+      "query": "What is studied about paired atoms in a Fermi gas?",
+      "relevant_document_ids": [
+        "0704.0006"
+      ],
+      "vector_document_ids": [
+        "0704.0006",
+        "0705.0271",
+        "0707.0792",
+        "0802.0341",
+        "0704.0769",
+        "0801.2747",
+        "0711.1562",
+        "0801.2747",
+        "0706.3360",
+        "0709.0817"
+      ],
+      "hybrid_document_ids": [
+        "0704.0006",
+        "0706.1465",
+        "0712.2128",
+        "0707.0792",
+        "0705.0271",
+        "0711.3006",
+        "0707.3140",
+        "0705.3491",
+        "0707.1884",
+        "0711.0414"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.12928066599852173,
+      "hybrid_latency_seconds": 0.9489762080011133
+    },
+    {
+      "query": "What is the polymer representation in quantum mechanics related to?",
+      "relevant_document_ids": [
+        "0704.0007"
+      ],
+      "vector_document_ids": [
+        "0704.0007",
+        "0707.0273",
+        "0711.2978",
+        "0709.2664",
+        "0704.2397",
+        "0705.1845",
+        "0801.3189",
+        "0711.4402",
+        "0711.0788",
+        "0706.2001"
+      ],
+      "hybrid_document_ids": [
+        "0704.0007",
+        "0707.0273",
+        "0704.2397",
+        "0711.0788",
+        "0711.2978",
+        "0710.3599",
+        "0802.0482",
+        "0711.2658",
+        "0711.2699",
+        "0704.3521"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.11827416700180038,
+      "hybrid_latency_seconds": 0.8467852499998116
+    },
+    {
+      "query": "What numerical methods are developed for dynamic loading material models?",
+      "relevant_document_ids": [
+        "0704.0008"
+      ],
+      "vector_document_ids": [
+        "0704.0008",
+        "0712.3921",
+        "0706.0429",
+        "0711.3271",
+        "0704.2663",
+        "0708.1205",
+        "0704.2662",
+        "0712.3918",
+        "0710.2425",
+        "0712.0919"
+      ],
+      "hybrid_document_ids": [
+        "0704.0008",
+        "0706.0429",
+        "0801.0271",
+        "0710.2181",
+        "0704.2662",
+        "0704.2663",
+        "0712.0919",
+        "0708.1205",
+        "0801.1683",
+        "0710.3676"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.12609554100345122,
+      "hybrid_latency_seconds": 0.8685991669990472
+    },
+    {
+      "query": "How are young stellar objects isolated in the Serpens star-forming region?",
+      "relevant_document_ids": [
+        "0704.0009"
+      ],
+      "vector_document_ids": [
+        "0704.0009",
+        "0704.0253",
+        "0712.3303",
+        "0707.2537",
+        "0704.0253",
+        "0712.0301",
+        "0708.1138",
+        "0704.1098",
+        "0704.0009",
+        "0705.3258"
+      ],
+      "hybrid_document_ids": [
+        "0704.0009",
+        "0711.2685",
+        "0707.0269",
+        "0801.4758",
+        "0712.3303",
+        "0712.1871",
+        "0801.1625",
+        "0709.2835",
+        "0704.1098",
+        "0705.3359"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.05688295800064225,
+      "hybrid_latency_seconds": 0.7870304999996733
+    },
+    {
+      "query": "What graph structures are used to characterize partial cubes?",
+      "relevant_document_ids": [
+        "0704.0010"
+      ],
+      "vector_document_ids": [
+        "0704.0010",
+        "0705.1025",
+        "0706.2453",
+        "0710.1870",
+        "0711.3149",
+        "0802.1722",
+        "0709.4087",
+        "0710.3901",
+        "0712.2585",
+        "0712.0111"
+      ],
+      "hybrid_document_ids": [
+        "0704.0010",
+        "0705.1025",
+        "0712.2433",
+        "0712.4216",
+        "0712.2585",
+        "0706.2453",
+        "0712.0270",
+        "0707.0226",
+        "0706.2204",
+        "0704.3696"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06532620800135192,
+      "hybrid_latency_seconds": 0.698529041997972
+    },
+    {
+      "query": "What algorithm is presented for Hilbert-Siegel cusp forms?",
+      "relevant_document_ids": [
+        "0704.0011"
+      ],
+      "vector_document_ids": [
+        "0704.0011",
+        "0802.2096",
+        "0801.3299",
+        "0710.4224",
+        "0802.2139",
+        "0711.3863",
+        "0802.0979",
+        "0802.0361",
+        "0801.4416",
+        "0711.1277"
+      ],
+      "hybrid_document_ids": [
+        "0704.0011",
+        "0711.3863",
+        "0801.4416",
+        "0802.2096",
+        "0802.0979",
+        "0710.4224",
+        "0705.1450",
+        "0711.1747",
+        "0712.1286",
+        "0801.3299"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06640233399957651,
+      "hybrid_latency_seconds": 0.6053312500007451
+    },
+    {
+      "query": "How is the distribution property of half-integral weight cusp forms extended?",
+      "relevant_document_ids": [
+        "0704.0012"
+      ],
+      "vector_document_ids": [
+        "0704.0012",
+        "0707.2365",
+        "0709.2001",
+        "0705.2467",
+        "0710.5793",
+        "0802.2096",
+        "0711.0632",
+        "0802.2139",
+        "0801.3692",
+        "0802.0361"
+      ],
+      "hybrid_document_ids": [
+        "0704.0012",
+        "0704.0013",
+        "0709.2001",
+        "0707.2365",
+        "0802.0361",
+        "0801.3926",
+        "0711.0632",
+        "0712.2463",
+        "0710.1237",
+        "0802.0963"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.052060084002732765,
+      "hybrid_latency_seconds": 0.6488150410004891
+    },
+    {
+      "query": "What type of modular forms does the paper extend Serre's p-adic limit result to?",
+      "relevant_document_ids": [
+        "0704.0013"
+      ],
+      "vector_document_ids": [
+        "0704.0013",
+        "0709.1611",
+        "0710.1237",
+        "0712.1317",
+        "0709.1968",
+        "0705.1213",
+        "0712.2227",
+        "0709.1645",
+        "0705.3614",
+        "0705.2467"
+      ],
+      "hybrid_document_ids": [
+        "0704.0013",
+        "0712.1317",
+        "0707.3747",
+        "0705.1213",
+        "0704.0012",
+        "0709.4190",
+        "0802.2196",
+        "0710.1237",
+        "0709.0011",
+        "0711.1701"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.05661379099910846,
+      "hybrid_latency_seconds": 0.5915649170019606
+    },
+    {
+      "query": "What mathematical theories connect string topology and differential forms in this work?",
+      "relevant_document_ids": [
+        "0704.0014"
+      ],
+      "vector_document_ids": [
+        "0704.0014",
+        "0710.4141",
+        "0710.4141",
+        "0708.1197",
+        "0712.3857",
+        "0707.4003",
+        "0706.1143",
+        "0704.1526",
+        "0802.1833",
+        "0710.5899"
+      ],
+      "hybrid_document_ids": [
+        "0704.0014",
+        "0710.1445",
+        "0705.0980",
+        "0708.1197",
+        "0707.4003",
+        "0802.1632",
+        "0710.5899",
+        "0802.0896",
+        "0712.3067",
+        "0711.2549"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.062335082999197766,
+      "hybrid_latency_seconds": 0.7235931670002174
+    },
+    {
+      "query": "What does the pure spinor formulation of superstring theory help evaluate?",
+      "relevant_document_ids": [
+        "0704.0015"
+      ],
+      "vector_document_ids": [
+        "0704.0015",
+        "0710.2598",
+        "0704.1219",
+        "0712.0324",
+        "0707.2336",
+        "0712.0324",
+        "0801.3076",
+        "0707.0654",
+        "0801.1428",
+        "0705.2191"
+      ],
+      "hybrid_document_ids": [
+        "0704.0015",
+        "0801.0580",
+        "0712.1826",
+        "0707.2336",
+        "0710.2598",
+        "0801.1428",
+        "0711.1799",
+        "0707.0654",
+        "0704.1219",
+        "0704.3413"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06990895799754071,
+      "hybrid_latency_seconds": 0.7060016249997716
+    },
+    {
+      "query": "Which doubly charmed baryon lifetimes are evaluated?",
+      "relevant_document_ids": [
+        "0704.0016"
+      ],
+      "vector_document_ids": [
+        "0704.0016",
+        "0710.0187",
+        "0711.4645",
+        "0708.1105",
+        "0704.0075",
+        "0709.0958",
+        "0706.2358",
+        "0710.5775",
+        "0712.2249",
+        "0710.5763"
+      ],
+      "hybrid_document_ids": [
+        "0704.0016",
+        "0709.0958",
+        "0711.2492",
+        "0704.0075",
+        "0711.4645",
+        "0708.1105",
+        "0710.2600",
+        "0711.1825",
+        "0709.0397",
+        "0710.0187"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06983783299801871,
+      "hybrid_latency_seconds": 0.7158644170012849
+    },
+    {
+      "query": "What was detected in spectroscopic observations of EX Hya?",
+      "relevant_document_ids": [
+        "0704.0017"
+      ],
+      "vector_document_ids": [
+        "0706.0887",
+        "0802.2339",
+        "0704.0017",
+        "0802.2339",
+        "0707.0193",
+        "0704.0017",
+        "0711.3322",
+        "0710.1506",
+        "0707.2919",
+        "0711.2249"
+      ],
+      "hybrid_document_ids": [
+        "0704.0017",
+        "0802.2339",
+        "0706.0887",
+        "0710.5225",
+        "0706.0253",
+        "0705.0919",
+        "0801.3609",
+        "0704.3065",
+        "0712.0812",
+        "0705.2946"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.09158649999881163,
+      "hybrid_latency_seconds": 0.829154874998494
+    },
+    {
+      "query": "How is the Callias index computed in this note?",
+      "relevant_document_ids": [
+        "0704.0018"
+      ],
+      "vector_document_ids": [
+        "0707.2993",
+        "0704.0812",
+        "0705.3248",
+        "0708.2543",
+        "0707.4446",
+        "0707.2684",
+        "0711.2392",
+        "0707.1043",
+        "0711.2631",
+        "0710.1318"
+      ],
+      "hybrid_document_ids": [
+        "0704.0018",
+        "0709.2656",
+        "0705.1150",
+        "0708.2188",
+        "0801.0154",
+        "0704.0812",
+        "0707.4446",
+        "0710.4932",
+        "0704.2799",
+        "0801.4605"
+      ],
+      "vector_recall_at_10": 0.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.05861312499837368,
+      "hybrid_latency_seconds": 0.7194125829992117
+    },
+    {
+      "query": "What new method is proposed for the extinction probability of the contact process?",
+      "relevant_document_ids": [
+        "0704.0019"
+      ],
+      "vector_document_ids": [
+        "0704.0019",
+        "0711.1258",
+        "0711.3597",
+        "0707.4394",
+        "0801.4900",
+        "0709.0702",
+        "0705.1967",
+        "0711.2037",
+        "0802.1028",
+        "0704.0380"
+      ],
+      "hybrid_document_ids": [
+        "0704.0019",
+        "0705.1967",
+        "0801.4900",
+        "0711.3597",
+        "0709.3774",
+        "0712.2622",
+        "0711.1258",
+        "0802.1028",
+        "0801.2478",
+        "0802.0729"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.05981750000137254,
+      "hybrid_latency_seconds": 0.7672121249997872
+    },
+    {
+      "query": "How was the hadronic form factor in D0 decay measured?",
+      "relevant_document_ids": [
+        "0704.0020"
+      ],
+      "vector_document_ids": [
+        "0704.0020",
+        "0710.3235",
+        "0711.3817",
+        "0712.2249",
+        "0712.3493",
+        "0708.0454",
+        "0710.0420",
+        "0709.3783",
+        "0704.0395",
+        "0706.2533"
+      ],
+      "hybrid_document_ids": [
+        "0704.0020",
+        "0705.4008",
+        "0710.1741",
+        "0710.4227",
+        "0802.2679",
+        "0712.1567",
+        "0704.2080",
+        "0711.3817",
+        "0710.0420",
+        "0708.0775"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06264124999870546,
+      "hybrid_latency_seconds": 0.738789374998305
+    },
+    {
+      "query": "What phenomenon occurs in product-activated enzymic reactions at high enzyme concentration?",
+      "relevant_document_ids": [
+        "0704.0021"
+      ],
+      "vector_document_ids": [
+        "0704.0021",
+        "0706.1748",
+        "0708.3599",
+        "0801.2447",
+        "0712.0391",
+        "0706.1504",
+        "0801.1296",
+        "0706.1504",
+        "0802.1223",
+        "0708.0380"
+      ],
+      "hybrid_document_ids": [
+        "0704.0021",
+        "0801.2447",
+        "0706.1748",
+        "0706.1017",
+        "0706.1504",
+        "0708.0277",
+        "0712.0391",
+        "0801.2920",
+        "0801.1296",
+        "0709.1696"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.07064141599767026,
+      "hybrid_latency_seconds": 0.676075708001008
+    },
+    {
+      "query": "What do Lie group integrators handle for stochastic differential equations?",
+      "relevant_document_ids": [
+        "0704.0022"
+      ],
+      "vector_document_ids": [
+        "0704.0022",
+        "0704.0022",
+        "0708.2187",
+        "0705.3156",
+        "0801.0996",
+        "0705.1844",
+        "0712.3908",
+        "0711.0145",
+        "0712.4123",
+        "0709.2222"
+      ],
+      "hybrid_document_ids": [
+        "0704.0022",
+        "0708.2187",
+        "0704.1543",
+        "0707.3454",
+        "0709.2222",
+        "0801.0996",
+        "0710.3611",
+        "0712.3908",
+        "0705.3223",
+        "0709.1463"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06876920799913933,
+      "hybrid_latency_seconds": 0.6402484159989399
+    },
+    {
+      "query": "How could millimeter observations help study the solar chromosphere?",
+      "relevant_document_ids": [
+        "0704.0023"
+      ],
+      "vector_document_ids": [
+        "0704.0023",
+        "0705.2304",
+        "0704.1509",
+        "0709.2417",
+        "0801.0374",
+        "0707.1310",
+        "0712.2538",
+        "0802.0938",
+        "0704.1558",
+        "0708.1022"
+      ],
+      "hybrid_document_ids": [
+        "0704.0023",
+        "0705.2304",
+        "0707.4421",
+        "0802.0938",
+        "0709.2417",
+        "0801.0671",
+        "0704.1509",
+        "0801.0374",
+        "0706.2014",
+        "0709.3462"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.07142216699867276,
+      "hybrid_latency_seconds": 0.7640166250021139
+    },
+    {
+      "query": "How were spin-wave waveforms in ferrimagnetic stripes observed?",
+      "relevant_document_ids": [
+        "0704.0024"
+      ],
+      "vector_document_ids": [
+        "0704.0024",
+        "0710.4926",
+        "0711.4720",
+        "0704.3397",
+        "0709.0938",
+        "0705.3750",
+        "0705.4191",
+        "0709.0560",
+        "0710.2890",
+        "0801.3012"
+      ],
+      "hybrid_document_ids": [
+        "0704.0024",
+        "0704.3397",
+        "0801.0781",
+        "0705.4191",
+        "0801.4719",
+        "0706.0247",
+        "0709.1130",
+        "0708.1272",
+        "0707.0703",
+        "0711.4720"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06411429199943086,
+      "hybrid_latency_seconds": 0.6831633750007313
+    },
+    {
+      "query": "What methods enable approximation-free calculations in electron-phonon systems?",
+      "relevant_document_ids": [
+        "0704.0025"
+      ],
+      "vector_document_ids": [
+        "0711.3392",
+        "0712.1369",
+        "0707.0210",
+        "0708.0127",
+        "0705.4154",
+        "0705.1428",
+        "0707.4521",
+        "0709.3104",
+        "0711.1832",
+        "0706.2774"
+      ],
+      "hybrid_document_ids": [
+        "0704.0025",
+        "0704.0723",
+        "0704.1295",
+        "0711.3392",
+        "0704.1878",
+        "0711.4761",
+        "0709.3104",
+        "0711.1630",
+        "0706.2774",
+        "0707.4521"
+      ],
+      "vector_recall_at_10": 0.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.08209324999916134,
+      "hybrid_latency_seconds": 0.6105928750002931
+    },
+    {
+      "query": "How are zero-divisors from Cayley-Dickson algebras interpreted?",
+      "relevant_document_ids": [
+        "0704.0026"
+      ],
+      "vector_document_ids": [
+        "0707.0700",
+        "0706.4288",
+        "0709.0671",
+        "0711.3907",
+        "0705.1581",
+        "0706.1810",
+        "0704.2838",
+        "0801.4609",
+        "0710.0510",
+        "0712.2075"
+      ],
+      "hybrid_document_ids": [
+        "0704.0026",
+        "0704.0112",
+        "0802.0852",
+        "0707.2869",
+        "0708.3649",
+        "0709.3242",
+        "0706.1810",
+        "0710.0433",
+        "0709.2287",
+        "0711.1389"
+      ],
+      "vector_recall_at_10": 0.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.07431429200005368,
+      "hybrid_latency_seconds": 0.6673241249991406
+    },
+    {
+      "query": "What happens to graphene's Gamma-point optical phonon near an inter-Landau-level resonance?",
+      "relevant_document_ids": [
+        "0704.0027"
+      ],
+      "vector_document_ids": [
+        "0704.0027",
+        "0704.0585",
+        "0705.3783",
+        "0801.3476",
+        "0704.0410",
+        "0712.4200",
+        "0705.1530",
+        "0707.0140",
+        "0711.0940",
+        "0711.4306"
+      ],
+      "hybrid_document_ids": [
+        "0704.0027",
+        "0704.0585",
+        "0704.0410",
+        "0711.1547",
+        "0712.4200",
+        "0705.3783",
+        "0708.0216",
+        "0801.1861",
+        "0709.0879",
+        "0708.3081"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.07392374999835738,
+      "hybrid_latency_seconds": 0.6120061250003346
+    },
+    {
+      "query": "What inequalities are proved for positive semidefinite matrices?",
+      "relevant_document_ids": [
+        "0704.0028"
+      ],
+      "vector_document_ids": [
+        "0704.0099",
+        "0704.0028",
+        "0802.0850",
+        "0709.1088",
+        "0709.4460",
+        "0704.0099",
+        "0708.1165",
+        "0801.4221",
+        "0705.0653",
+        "0710.0870"
+      ],
+      "hybrid_document_ids": [
+        "0704.0099",
+        "0704.0028",
+        "0711.0672",
+        "0709.1235",
+        "0706.2324",
+        "0707.0230",
+        "0712.3868",
+        "0710.4167",
+        "0705.0677",
+        "0708.1165"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.07431762499982142,
+      "hybrid_latency_seconds": 0.6540763339980913
+    },
+    {
+      "query": "How is flavor symmetry breaking used in the constituent quark model?",
+      "relevant_document_ids": [
+        "0704.0029"
+      ],
+      "vector_document_ids": [
+        "0710.2734",
+        "0705.4525",
+        "0801.3491",
+        "0704.0029",
+        "0711.0881",
+        "0711.4472",
+        "0712.1544",
+        "0802.1693",
+        "0710.2928",
+        "0705.4340"
+      ],
+      "hybrid_document_ids": [
+        "0704.0029",
+        "0710.2734",
+        "0708.1118",
+        "0705.2493",
+        "0710.2928",
+        "0801.3491",
+        "0709.0265",
+        "0706.0953",
+        "0710.1869",
+        "0706.4141"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06656170899805147,
+      "hybrid_latency_seconds": 0.6696438330000092
+    },
+    {
+      "query": "What competition is studied in electron-phonon interaction models using DMFT?",
+      "relevant_document_ids": [
+        "0704.0030"
+      ],
+      "vector_document_ids": [
+        "0704.0030",
+        "0706.2582",
+        "0801.2634",
+        "0711.0624",
+        "0705.1428",
+        "0707.3197",
+        "0712.0483",
+        "0707.2705",
+        "0711.3392",
+        "0704.0365"
+      ],
+      "hybrid_document_ids": [
+        "0704.0030",
+        "0711.4882",
+        "0709.3424",
+        "0705.1402",
+        "0706.2352",
+        "0708.1407",
+        "0707.3875",
+        "0801.3495",
+        "0704.0365",
+        "0706.4253"
+      ],
+      "vector_recall_at_10": 1.0,
+      "hybrid_recall_at_10": 1.0,
+      "vector_latency_seconds": 0.06267845799811766,
+      "hybrid_latency_seconds": 0.7129210839993902
+    }
+  ],
+  "notes": [
+    "Gemini compression was disabled to isolate retrieval quality.",
+    "Answer accuracy, faithfulness, token reduction, and cache hit rate require separate measured runs."
+  ]
+}
