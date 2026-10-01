@@ -34,7 +34,10 @@ class NoOpCache:
 def parse_json_response(response: Any) -> dict[str, Any]:
     content = response.content if hasattr(response, "content") else str(response)
     if isinstance(content, list):
-        content = "".join(str(part) for part in content)
+        content = "".join(
+            part.get("text", "") if isinstance(part, dict) else str(part)
+            for part in content
+        )
     start = str(content).find("{")
     end = str(content).rfind("}")
     if start < 0 or end < start:
@@ -47,6 +50,16 @@ def parse_json_response(response: Any) -> dict[str, Any]:
     if not isinstance(value, dict):
         raise ValueError("LLM response was not a JSON object")
     return value
+
+
+def response_text(response: Any) -> str:
+    content = response.content if hasattr(response, "content") else response
+    if isinstance(content, list):
+        return "".join(
+            part.get("text", "") if isinstance(part, dict) else str(part)
+            for part in content
+        )
+    return str(content)
 
 
 def context_text(documents: list[Document]) -> str:
@@ -151,8 +164,12 @@ def main() -> None:
         baseline_results = baseline.retrieve(query, top_k=10)
         baseline_documents = [result.document for result in baseline_results]
 
-        baseline_answer = llm.invoke(answer_prompt(query, vector_documents)).content
-        hybrid_answer = llm.invoke(answer_prompt(query, hybrid_documents)).content
+        baseline_answer = response_text(
+            llm.invoke(answer_prompt(query, vector_documents))
+        )
+        hybrid_answer = response_text(
+            llm.invoke(answer_prompt(query, hybrid_documents))
+        )
         baseline_judge = parse_json_response(
             llm.invoke(judge_prompt(query, row["reference_answer"], baseline_answer, vector_documents))
         )

@@ -1,0 +1,356 @@
+{
+  "queries": 30,
+  "context_precision": {
+    "vector_only": 0.1,
+    "hybrid_compressed": 0.7883730158730159
+  },
+  "answer_accuracy_0_to_2": {
+    "vector_only": 1.9666666666666666,
+    "hybrid_compressed": 1.9666666666666666
+  },
+  "faithfulness_0_to_2": {
+    "vector_only": 2,
+    "hybrid_compressed": 2
+  },
+  "context_tokens": {
+    "baseline_total": 42620,
+    "compressed_total": 3873,
+    "reduction_percent": 90.91271703425622
+  },
+  "semantic_cache": {
+    "repeat_queries": 30,
+    "mean_repeat_latency_seconds": 0.6359714569333543
+  },
+  "records": [
+    {
+      "query": "What process is analyzed for massive photon pairs at hadron colliders?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1604,
+      "compressed_context_tokens": 77,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What does the colored (k,l)-pebble game characterize?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1649,
+      "compressed_context_tokens": 26,
+      "baseline_accuracy": 1,
+      "hybrid_accuracy": 1,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What model is used to describe the evolution of the Earth-Moon system?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.5,
+      "baseline_context_tokens": 1850,
+      "compressed_context_tokens": 93,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What combinatorial objects are counted by a determinant of Stirling cycle numbers?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 925,
+      "compressed_context_tokens": 21,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How can the Lambda_alpha norm be computed?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 950,
+      "compressed_context_tokens": 55,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What is studied about paired atoms in a Fermi gas?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.125,
+      "baseline_context_tokens": 1665,
+      "compressed_context_tokens": 409,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What is the polymer representation in quantum mechanics related to?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.3333333333333333,
+      "baseline_context_tokens": 1479,
+      "compressed_context_tokens": 132,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What numerical methods are developed for dynamic loading material models?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.14285714285714285,
+      "baseline_context_tokens": 1654,
+      "compressed_context_tokens": 267,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How are young stellar objects isolated in the Serpens star-forming region?",
+      "vector_context_precision": 0.2,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1710,
+      "compressed_context_tokens": 53,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What graph structures are used to characterize partial cubes?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.1,
+      "baseline_context_tokens": 1291,
+      "compressed_context_tokens": 1079,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What algorithm is presented for Hilbert-Siegel cusp forms?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1069,
+      "compressed_context_tokens": 34,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How is the distribution property of half-integral weight cusp forms extended?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 823,
+      "compressed_context_tokens": 39,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What type of modular forms does the paper extend Serre's p-adic limit result to?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1309,
+      "compressed_context_tokens": 45,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What mathematical theories connect string topology and differential forms in this work?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1173,
+      "compressed_context_tokens": 30,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What does the pure spinor formulation of superstring theory help evaluate?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.25,
+      "baseline_context_tokens": 1321,
+      "compressed_context_tokens": 178,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "Which doubly charmed baryon lifetimes are evaluated?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1616,
+      "compressed_context_tokens": 43,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What was detected in spectroscopic observations of EX Hya?",
+      "vector_context_precision": 0.2,
+      "hybrid_context_precision": 0.5,
+      "baseline_context_tokens": 1791,
+      "compressed_context_tokens": 218,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How is the Callias index computed in this note?",
+      "vector_context_precision": 0.0,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1540,
+      "compressed_context_tokens": 18,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What new method is proposed for the extinction probability of the contact process?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1265,
+      "compressed_context_tokens": 34,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How was the hadronic form factor in D0 decay measured?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1448,
+      "compressed_context_tokens": 116,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What phenomenon occurs in product-activated enzymic reactions at high enzyme concentration?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1535,
+      "compressed_context_tokens": 49,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What do Lie group integrators handle for stochastic differential equations?",
+      "vector_context_precision": 0.2,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1371,
+      "compressed_context_tokens": 67,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How could millimeter observations help study the solar chromosphere?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.5,
+      "baseline_context_tokens": 1750,
+      "compressed_context_tokens": 135,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How were spin-wave waveforms in ferrimagnetic stripes observed?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1554,
+      "compressed_context_tokens": 43,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What methods enable approximation-free calculations in electron-phonon systems?",
+      "vector_context_precision": 0.0,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1260,
+      "compressed_context_tokens": 41,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How are zero-divisors from Cayley-Dickson algebras interpreted?",
+      "vector_context_precision": 0.0,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1162,
+      "compressed_context_tokens": 70,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What happens to graphene's Gamma-point optical phonon near an inter-Landau-level resonance?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1271,
+      "compressed_context_tokens": 59,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What inequalities are proved for positive semidefinite matrices?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 0.2,
+      "baseline_context_tokens": 1410,
+      "compressed_context_tokens": 367,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "How is flavor symmetry breaking used in the constituent quark model?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1635,
+      "compressed_context_tokens": 36,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    },
+    {
+      "query": "What competition is studied in electron-phonon interaction models using DMFT?",
+      "vector_context_precision": 0.1,
+      "hybrid_context_precision": 1.0,
+      "baseline_context_tokens": 1540,
+      "compressed_context_tokens": 39,
+      "baseline_accuracy": 2,
+      "hybrid_accuracy": 2,
+      "baseline_faithfulness": 2,
+      "hybrid_faithfulness": 2
+    }
+  ]
+}
