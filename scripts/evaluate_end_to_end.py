@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import ast
 import json
 import os
 import statistics
@@ -38,7 +39,11 @@ def parse_json_response(response: Any) -> dict[str, Any]:
     end = str(content).rfind("}")
     if start < 0 or end < start:
         raise ValueError("LLM did not return a JSON object")
-    value = json.loads(str(content)[start : end + 1])
+    payload = str(content)[start : end + 1]
+    try:
+        value = json.loads(payload)
+    except json.JSONDecodeError:
+        value = ast.literal_eval(payload)
     if not isinstance(value, dict):
         raise ValueError("LLM response was not a JSON object")
     return value
