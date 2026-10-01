@@ -61,6 +61,26 @@ New collections use Chroma HNSW `M=16` and `ef=100` for a speed and recall
 balance. HNSW settings are fixed when a collection is created; rebuild into a
 new collection to apply these settings to an existing index.
 
+## Query API
+
+Start the FastAPI service:
+
+```bash
+env -u VIRTUAL_ENV uv run uvicorn src.api.app:app --reload
+```
+
+Query the hybrid retriever:
+
+```bash
+curl -X POST http://127.0.0.1:8000/query \
+	-H 'Content-Type: application/json' \
+	-d '{"query":"quantum chromodynamics","top_k":10}'
+```
+
+The response contains compressed parent contexts, retrieval scores, vector and
+BM25 ranks, and source metadata. Interactive API documentation is available at
+`/docs`.
+
 ## Logging and errors
 
 Application logs are emitted through the `rag` logger. Configure them with
