@@ -9,7 +9,7 @@ from typing import Any, Iterable
 from dotenv import load_dotenv
 from langchain_core.documents import Document
 
-from ..infra.exceptions import RAGError
+from ..core.exceptions import RAGError
 
 load_dotenv()
 

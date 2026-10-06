@@ -6,7 +6,7 @@ from typing import Any, Iterable
 from langchain_core.documents import Document
 from sentence_transformers import CrossEncoder
 
-from ..infra.exceptions import RAGError
+from ..core.exceptions import RAGError
 
 DEFAULT_RERANKER_MODEL = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 

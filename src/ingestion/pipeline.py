@@ -18,8 +18,8 @@ from .chunkers import (
 )
 from .parsers import huggingface_loader
 from ..vector_store.client import ChromaVectorStore
-from ..infra.exceptions import IngestionError, RAGError
-from ..logging.loggers import get_logger, log_exception
+from ..core.exceptions import IngestionError, RAGError
+from ..core.logging import get_logger, log_exception
 
 logger = get_logger(__name__)
 

@@ -1,0 +1,5 @@
+define user ask research question
+  $input_text
+
+def bot blocked request
+  "I can't help with that request because it contains sensitive personal information or unsafe content. Please remove private details and ask a safe research question."

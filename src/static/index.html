@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ResearchMind</title>
+  <style>
+    :root { --ink:#17211f; --muted:#71807b; --paper:#f6f5ef; --panel:#fffefa; --line:#dfe4dc; --accent:#176b5b; --dark:#0e4c41; }
+    * { box-sizing:border-box; } body { margin:0; color:var(--ink); background:radial-gradient(circle at 12% 8%,#e3eee4,transparent 28rem),var(--paper); font:16px/1.55 Georgia,serif; }
+    .shell { width:min(980px,calc(100% - 32px)); margin:auto; padding:36px 0 56px; } header { display:flex; justify-content:space-between; gap:20px; align-items:end; margin-bottom:28px; }
+    .eyebrow,.label,.meta { font:700 11px/1.2 ui-sans-serif,system-ui,sans-serif; letter-spacing:.12em; text-transform:uppercase; color:var(--muted); } .eyebrow { color:var(--accent); }
+    h1 { margin:7px 0 0; font-size:clamp(32px,6vw,58px); line-height:1; } .tagline { max-width:270px; color:var(--muted); font:14px/1.45 ui-sans-serif,system-ui,sans-serif; }
+    .chat { overflow:hidden; border:1px solid var(--line); border-radius:12px; background:#fffefaC7; box-shadow:0 18px 60px #1a332c1a; } .conversation { min-height:430px; padding:clamp(20px,5vw,44px); }
+    .welcome { max-width:620px; padding:32px 0; } .welcome h2 { margin:0 0 10px; font-size:30px; } .welcome p { color:var(--muted); }
+    .message { display:grid; gap:8px; max-width:760px; margin-bottom:28px; } .message.user { margin-left:auto; justify-items:end; } .bubble { white-space:pre-wrap; padding:14px 17px; border-radius:10px; } .user .bubble { color:white; background:var(--dark); } .assistant .bubble { border:1px solid var(--line); background:var(--panel); }
+    details { margin-top:12px; border-top:1px solid var(--line); padding-top:8px; } summary { cursor:pointer; color:var(--accent); font:700 13px ui-sans-serif,system-ui,sans-serif; } .source { margin:8px 0; color:#42514c; font-size:14px; }
+    .composer { display:grid; grid-template-columns:1fr auto; gap:12px; padding:18px; border-top:1px solid var(--line); } textarea { min-height:52px; padding:14px; resize:vertical; border:1px solid var(--line); border-radius:8px; background:#fbfcf8; font:inherit; } button { min-height:52px; padding:0 22px; border:0; border-radius:8px; color:white; background:var(--accent); cursor:pointer; font:700 14px ui-sans-serif,system-ui,sans-serif; } button:disabled { opacity:.55; cursor:wait; } .status { padding:0 18px 12px; color:var(--muted); font:12px ui-sans-serif,system-ui,sans-serif; }
+    @media (max-width:620px) { .shell{width:calc(100% - 20px);padding-top:22px;} header{display:block;} .tagline{max-width:none;margin-top:14px;} .composer{grid-template-columns:1fr;} button{width:100%;} }
+  </style>
+</head>
+<body>
+  <main class="shell"><header><div><div class="eyebrow">Research assistant</div><h1>ResearchMind</h1></div><p class="tagline">Ask a question. Search the corpus. Keep the evidence close.</p></header>
+    <section class="chat"><div class="conversation" id="conversation"><div class="welcome" id="welcome"><h2>What are you investigating?</h2><p>Ask a research question and receive an answer grounded in retrieved parent contexts.</p></div></div><div class="status" id="status"></div><form class="composer" id="composer"><textarea id="query" placeholder="Ask a research question..." required></textarea><button id="send">Ask ResearchMind</button></form></section>
+  </main>
+  <script>
+    const conversation=document.querySelector('#conversation'), form=document.querySelector('#composer'), input=document.querySelector('#query'), send=document.querySelector('#send'), status=document.querySelector('#status');
+    function message(kind,label,text){const el=document.createElement('article');el.className=`message ${kind}`;el.innerHTML=`<div class="label">${label}</div><div class="bubble"></div>`;el.querySelector('.bubble').textContent=text;conversation.append(el);return el;}
+    form.addEventListener('submit',async event=>{event.preventDefault();const query=input.value.trim();if(!query)return;document.querySelector('#welcome')?.remove();message('user','You',query);input.value='';send.disabled=true;status.textContent='Searching the research collection...';try{const response=await fetch('/query',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({query,top_k:10})});const data=await response.json();if(!response.ok)throw Error(data.detail||'Request failed');const reply=message('assistant',data.blocked?'ResearchMind · Guardrail':'ResearchMind',data.answer||'No answer generated.');if(!data.blocked)data.results.forEach((result,index)=>{const details=document.createElement('details');details.innerHTML=`<summary>Source ${index+1} · score ${Number(result.score).toFixed(3)}</summary><p class="source"></p>`;details.querySelector('.source').textContent=result.content;reply.append(details);});status.textContent=data.blocked?'Request blocked by a safety guardrail':`${data.results.length} evidence sources returned`;}catch(error){message('assistant','ResearchMind',`I could not complete that search: ${error.message}`);status.textContent='Request failed';}finally{send.disabled=false;input.focus();}});
+  </script>
+</body>
+</html>

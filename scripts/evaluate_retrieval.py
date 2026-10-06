@@ -45,11 +45,11 @@ def recall_at_10(result_ids: list[str], relevant_ids: set[str]) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Evaluate vector and hybrid retrieval.")
-    parser.add_argument("--dataset", default="data/eval_queries.jsonl")
+    parser.add_argument("--dataset", default="evals/datasets/eval_queries.jsonl")
     parser.add_argument("--persist-directory", default=".chroma")
     parser.add_argument("--collection", default="arxiv_abstracts_parent_child")
     parser.add_argument("--candidate-k", type=int, default=50)
-    parser.add_argument("--output", default="data/eval_results.json")
+    parser.add_argument("--output", default="evals/eval_results.json")
     args = parser.parse_args()
 
     rows = [

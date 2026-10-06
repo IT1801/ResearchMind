@@ -6,8 +6,8 @@ import hashlib
 from langchain_core.documents import Document
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 
-from ..infra.exceptions import ChunkingError
-from ..logging.loggers import get_logger, log_exception
+from ..core.exceptions import ChunkingError
+from ..core.logging import get_logger, log_exception
 
 
 DEFAULT_CHUNK_SIZE = 600

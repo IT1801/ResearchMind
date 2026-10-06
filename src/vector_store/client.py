@@ -9,20 +9,12 @@ from typing import Any
 import chromadb
 from langchain_core.documents import Document
 
-from ..embeddings.vector_embeddings import bge_embedding_function
-from ..infra.exceptions import VectorStoreError
-from ..logging.loggers import get_logger, log_exception
+from ..embeddings.encoder import bge_embedding_function
+from ..core.exceptions import VectorStoreError
+from ..core.logging import get_logger, log_exception
+from .index_manager import HNSW_METADATA
 
 logger = get_logger(__name__)
-
-HNSW_M = 16
-HNSW_EF = 100
-HNSW_METADATA = {
-    "hnsw:M": HNSW_M,
-    "hnsw:construction_ef": HNSW_EF,
-    "hnsw:search_ef": HNSW_EF,
-}
-
 
 class ChromaVectorStore:
     """Persistent Chroma storage for LangChain documents."""

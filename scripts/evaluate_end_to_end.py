@@ -108,9 +108,9 @@ def precision(documents: list[Document], relevant_ids: set[str]) -> float:
 
 def main() -> None:
     parser = argparse.ArgumentParser(description="Run the end-to-end RAG evaluation.")
-    parser.add_argument("--dataset", default="data/eval_queries.jsonl")
+    parser.add_argument("--dataset", default="evals/datasets/eval_queries.jsonl")
     parser.add_argument("--collection", default="arxiv_abstracts_parent_child")
-    parser.add_argument("--output", default="data/eval_end_to_end.json")
+    parser.add_argument("--output", default="evals/eval_end_to_end.json")
     parser.add_argument("--cache-collection", default="semantic_query_cache_eval")
     args = parser.parse_args()
 

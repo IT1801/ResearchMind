@@ -9,9 +9,9 @@ from typing import Any
 import chromadb
 from langchain_core.documents import Document
 
-from ..embeddings.vector_embeddings import bge_embedding_function
-from ..infra.exceptions import RAGError
-from ..vector_store.client import HNSW_METADATA
+from ..embeddings.encoder import bge_embedding_function
+from ..core.exceptions import RAGError
+from ..vector_store.index_manager import HNSW_METADATA
 
 DEFAULT_CACHE_COLLECTION = "semantic_query_cache"
 DEFAULT_SIMILARITY_THRESHOLD = 0.12

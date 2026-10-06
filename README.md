@@ -81,6 +81,14 @@ The response contains compressed parent contexts, retrieval scores, vector and
 BM25 ranks, and source metadata. Interactive API documentation is available at
 `/docs`.
 
+## Guardrails
+
+NeMo Guardrails protect both sides of `/query`. Input and generated output are
+checked for PII, secrets, prompt injection, malware or credential theft,
+violent wrongdoing, self-harm instructions, and sexual content involving
+minors. Blocked requests return a custom safety message, `blocked: true`, and
+no source contexts.
+
 ## Logging and errors
 
 Application logs are emitted through the `rag` logger. Configure them with

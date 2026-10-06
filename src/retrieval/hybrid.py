@@ -8,8 +8,8 @@ from typing import Any, Callable
 from langchain_core.documents import Document
 from rank_bm25 import BM25Okapi
 
-from ..infra.exceptions import RAGError, VectorStoreError
-from ..logging.loggers import get_logger, log_exception
+from ..core.exceptions import RAGError, VectorStoreError
+from ..core.logging import get_logger, log_exception
 from ..vector_store.client import ChromaVectorStore
 from .context_compressor import LLMContextCompressor
 from .reranker import CrossEncoderReranker

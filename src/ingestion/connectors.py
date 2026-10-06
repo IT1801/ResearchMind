@@ -14,8 +14,8 @@ from urllib.request import Request, urlopen
 from dotenv import load_dotenv
 from langchain_core.documents import Document
 
-from ..infra.exceptions import DataSourceError
-from ..logging.loggers import get_logger, log_exception
+from ..core.exceptions import DataSourceError
+from ..core.logging import get_logger, log_exception
 
 load_dotenv()
 logger = get_logger(__name__)

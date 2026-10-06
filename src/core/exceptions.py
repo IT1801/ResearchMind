@@ -18,7 +18,7 @@ class DocumentParseError(RAGError):
 
 
 class ChunkingError(RAGError):
-    """Raised when document chunking configuration or execution fails."""
+    """Raised when chunking configuration or execution fails."""
 
 
 class EmbeddingError(RAGError):

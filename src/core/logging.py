@@ -7,9 +7,7 @@ import sys
 from collections.abc import Mapping
 from typing import Any
 
-from dotenv import load_dotenv
-
-load_dotenv()
+from .config import get_settings
 
 _LOGGER_NAME = "rag"
 _CONFIGURED = False
@@ -35,13 +33,12 @@ class JsonFormatter(logging.Formatter):
 
 
 def configure_logging(level: str | None = None, json_logs: bool | None = None) -> None:
-    """Configure application logging once, using environment defaults."""
     global _CONFIGURED
     if _CONFIGURED:
         return
-
-    configured_level = level or os.getenv("LOG_LEVEL", "INFO")
-    use_json = json_logs if json_logs is not None else os.getenv("LOG_JSON", "false").lower() == "true"
+    settings = get_settings()
+    configured_level = level or settings.log_level or os.getenv("LOG_LEVEL", "INFO")
+    use_json = settings.log_json if json_logs is None else json_logs
     handler = logging.StreamHandler(sys.stderr)
     handler.setFormatter(JsonFormatter() if use_json else logging.Formatter(
         "%(asctime)s %(levelname)s %(name)s %(message)s"
@@ -55,7 +52,6 @@ def configure_logging(level: str | None = None, json_logs: bool | None = None) -
 
 
 def get_logger(name: str | None = None) -> logging.Logger:
-    """Return a configured child logger for an application module."""
     configure_logging()
     return logging.getLogger(f"{_LOGGER_NAME}.{name}" if name else _LOGGER_NAME)
 
@@ -66,7 +62,6 @@ def log_exception(
     error: BaseException,
     context: Mapping[str, Any] | None = None,
 ) -> None:
-    """Log an exception with safe structured context and traceback."""
     logger.error(
         message,
         exc_info=(type(error), error, error.__traceback__),
