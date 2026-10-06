@@ -9,7 +9,7 @@ from typing import Any
 
 from .config import get_settings
 
-_LOGGER_NAME = "rag"
+_LOGGER_NAME = "researchmind"
 _CONFIGURED = False
 _RESERVED_FIELDS = set(logging.LogRecord(None, 0, "", 0, "", (), None).__dict__)
 

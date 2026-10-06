@@ -91,7 +91,7 @@ no source contexts.
 
 ## Logging and errors
 
-Application logs are emitted through the `rag` logger. Configure them with
+Application logs are emitted through the `researchmind` logger. Configure them with
 `LOG_LEVEL=DEBUG` for detailed diagnostics or `LOG_JSON=true` for structured JSON
 records. Expected failures use typed exceptions such as `DataSourceError`,
 `EmbeddingError`, `VectorStoreError`, and `IngestionError`.
