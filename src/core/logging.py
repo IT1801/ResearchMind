@@ -5,6 +5,8 @@ import logging
 import os
 import sys
 from collections.abc import Mapping
+from logging.handlers import RotatingFileHandler
+from pathlib import Path
 from typing import Any
 
 from .config import get_settings
@@ -32,6 +34,24 @@ class JsonFormatter(logging.Formatter):
         return json.dumps(payload, default=str)
 
 
+class ContextFormatter(logging.Formatter):
+    """Format human-readable logs without dropping structured context fields."""
+
+    def format(self, record: logging.LogRecord) -> str:
+        message = super().format(record)
+        context = {
+            key: value
+            for key, value in record.__dict__.items()
+            if key not in _RESERVED_FIELDS
+            and key not in {"asctime", "message"}
+            and not key.startswith("_")
+        }
+        if not context:
+            return message
+        details = " ".join(f"{key}={value!r}" for key, value in sorted(context.items()))
+        return f"{message} | {details}"
+
+
 def configure_logging(level: str | None = None, json_logs: bool | None = None) -> None:
     global _CONFIGURED
     if _CONFIGURED:
@@ -39,14 +59,25 @@ def configure_logging(level: str | None = None, json_logs: bool | None = None) -
     settings = get_settings()
     configured_level = level or settings.log_level or os.getenv("LOG_LEVEL", "INFO")
     use_json = settings.log_json if json_logs is None else json_logs
-    handler = logging.StreamHandler(sys.stderr)
-    handler.setFormatter(JsonFormatter() if use_json else logging.Formatter(
+    formatter = JsonFormatter() if use_json else ContextFormatter(
         "%(asctime)s %(levelname)s %(name)s %(message)s"
-    ))
+    )
+    console_handler = logging.StreamHandler(sys.stderr)
+    console_handler.setFormatter(formatter)
+    log_path = Path(settings.log_file)
+    log_path.parent.mkdir(parents=True, exist_ok=True)
+    file_handler = RotatingFileHandler(
+        log_path,
+        maxBytes=10 * 1024 * 1024,
+        backupCount=5,
+        encoding="utf-8",
+    )
+    file_handler.setFormatter(formatter)
     logger = logging.getLogger(_LOGGER_NAME)
     logger.setLevel(configured_level.upper())
     logger.handlers.clear()
-    logger.addHandler(handler)
+    logger.addHandler(console_handler)
+    logger.addHandler(file_handler)
     logger.propagate = False
     _CONFIGURED = True
 

@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     semantic_cache_collection: str = "semantic_query_cache"
     log_level: str = "INFO"
     log_json: bool = False
+    log_file: str = "logs/researchmind.log"
 
     model_config = SettingsConfigDict(
         env_file=".env",
