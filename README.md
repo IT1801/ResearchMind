@@ -89,6 +89,21 @@ violent wrongdoing, self-harm instructions, and sexual content involving
 minors. Blocked requests return a custom safety message, `blocked: true`, and
 no source contexts.
 
+## LangSmith observability
+
+Set these values in `.env` to enable LangSmith traces:
+
+```env
+LANGCHAIN_TRACING_V2=true
+LANGCHAIN_API_KEY=your_key
+LANGCHAIN_PROJECT=researchmind
+LANGCHAIN_ENDPOINT=https://api.smith.langchain.com
+```
+
+Named traces cover retrieval, context compression, answer generation, and
+ingestion. Blocked input is checked before traced retrieval so sensitive input
+does not enter the application spans.
+
 ## Logging and errors
 
 Application logs are emitted through the `researchmind` logger. Configure them with

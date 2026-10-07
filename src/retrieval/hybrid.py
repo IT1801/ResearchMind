@@ -10,6 +10,7 @@ from rank_bm25 import BM25Okapi
 
 from ..core.exceptions import RAGError, VectorStoreError
 from ..core.logging import get_logger, log_exception
+from ..core.observability import traced
 from ..vector_store.client import ChromaVectorStore
 from .context_compressor import LLMContextCompressor
 from .reranker import CrossEncoderReranker
@@ -98,6 +99,7 @@ class HybridRetriever:
 			log_exception(logger, "Unable to build BM25 index", error)
 			raise VectorStoreError("Unable to build BM25 index") from error
 
+	@traced("researchmind.hybrid_retrieval", run_type="retriever")
 	def retrieve(self, query: str, top_k: int = 10) -> list[RetrievalResult]:
 		"""Rank child chunks, then return their unique parent contexts."""
 		if not query.strip():

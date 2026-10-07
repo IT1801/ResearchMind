@@ -6,6 +6,7 @@ from typing import Any
 from langchain_google_genai import ChatGoogleGenerativeAI
 
 from ..core.config import get_settings
+from ..core.observability import traced
 from ..retrieval.hybrid import HybridRetriever
 from ..guardrails import ResearchMindGuardrails
 
@@ -41,6 +42,7 @@ def get_llm() -> ChatGoogleGenerativeAI:
     return _llm
 
 
+@traced("researchmind.answer", run_type="llm")
 def answer_query(query_text: str, results: list[Any]) -> str:
     context = "\n\n".join(
         f"Source {index + 1}:\n{result.document.page_content}"

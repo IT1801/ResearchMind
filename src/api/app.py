@@ -5,6 +5,10 @@ from pathlib import Path
 from fastapi import FastAPI
 from fastapi.responses import FileResponse
 
+from ..core.observability import configure_observability
+
+configure_observability()
+
 from .middleware import request_context_middleware
 from .routes.health import router as health_router
 from .routes.ingest import router as ingest_router

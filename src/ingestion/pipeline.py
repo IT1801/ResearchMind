@@ -20,6 +20,7 @@ from .parsers import huggingface_loader
 from ..vector_store.client import ChromaVectorStore
 from ..core.exceptions import IngestionError, RAGError
 from ..core.logging import get_logger, log_exception
+from ..core.observability import traced
 
 logger = get_logger(__name__)
 
@@ -82,6 +83,7 @@ class IngestionPipeline:
 			child_chunk_overlap=self.child_chunk_overlap,
 		)
 
+	@traced("researchmind.ingestion", run_type="chain")
 	def run(self, limit: int | None = None) -> IngestionStats:
 		stats = IngestionStats()
 		batch: list[Document] = []

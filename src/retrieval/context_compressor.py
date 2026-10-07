@@ -10,6 +10,7 @@ from dotenv import load_dotenv
 from langchain_core.documents import Document
 
 from ..core.exceptions import RAGError
+from ..core.observability import traced
 
 load_dotenv()
 
@@ -58,6 +59,7 @@ class LLMContextCompressor:
                 ) from error
         return self._client
 
+    @traced("researchmind.context_compression", run_type="chain")
     def compress(
         self,
         query: str,

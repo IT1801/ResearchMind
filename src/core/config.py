@@ -17,6 +17,10 @@ class Settings(BaseSettings):
     log_level: str = "INFO"
     log_json: bool = False
     log_file: str = "logs/researchmind.log"
+    langchain_tracing_v2: bool = False
+    langchain_api_key: str | None = None
+    langchain_project: str = "researchmind"
+    langchain_endpoint: str = "https://api.smith.langchain.com"
 
     model_config = SettingsConfigDict(
         env_file=".env",
